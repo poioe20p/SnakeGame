@@ -11,7 +11,7 @@ import src.game.AutomaticSnake;
 public class Cell{
 	private BoardPosition position;
 	private Snake ocuppyingSnake = null;
-	private GameElement gameElement=null;
+	private GameElement gameElement = null;
 
 	public GameElement getGameElement() {
 		return gameElement;
@@ -28,7 +28,7 @@ public class Cell{
 	}
 
 	// request a cell to be occupied by Snake, If it is occupied by another Snake or Obstacle, wait.
-	public  void request(Snake snake)
+	public void request(Snake snake)
 			throws InterruptedException {
 		// TODO
 	}
@@ -51,9 +51,10 @@ public class Cell{
 
 	}
 
+	// Returns true if there's a non-null instance of occupyingSnake or gameElement
 	public boolean isOcupied() {
 		// TODO
-		return false;
+		return ocuppyingSnake != null || gameElement != null;
 	}
 
 

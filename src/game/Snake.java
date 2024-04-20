@@ -20,12 +20,13 @@ public abstract class Snake extends Thread {
 	public Snake(int id,Board board) {
 		this.id = id;
 		this.board=board;
+		doInitialPositioning();
 	}
 
-	
+
 	public void killSnake () { killed = true ; }
 	public boolean wasKilled () { return killed == true ;}
-	
+
 	public int getSize() {
 		return size;
 	}
@@ -37,21 +38,43 @@ public abstract class Snake extends Thread {
 	public int getCurrentLength() {
 		return cells.size();
 	}
-	
+
 	public LinkedList<Cell> getCells() {
 		return cells;
 	}
+
 	protected void move(Cell cell) throws InterruptedException {
 		//TODO
+
 	}
-	protected void doInitialPositioning() {
+
+	// The snake's initial position is randomly attributed to a row in the 1st colum specifically
+	// The selected position is then added as to the list of cells only if it can successfully request for
+	// the cell, which means the cell must be empty or else the method will define a new position randomly
+	// for the snake and then repeat the process until the snake obtains a position
+	protected void doInitialPositioning()  {
 		//TODO
+		BoardPosition boardPosition = new BoardPosition( (int) (Math.random()*31), 0);
+		while(true) {
+			if (!board.getCell(boardPosition).isOcupied()) {
+				try {
+					board.getCell(boardPosition).request(this);
+					cells.add(new Cell(boardPosition));
+					board.addSnake(this);
+					break;
+				} catch (InterruptedException e) {
+					throw new RuntimeException(e);
+				}
+			} else {
+				boardPosition = new BoardPosition( (int) (Math.random()*31), 0);
+			}
+		}
 	}
-	
+
 	public Board getBoard() {
 		return board;
 	}
-	
+
 	// Utility method to return cells occupied by snake as a list of BoardPosition
 	// Used in GUI. Do not alter
 	public synchronized LinkedList<BoardPosition> getPath() {
@@ -61,5 +84,5 @@ public abstract class Snake extends Thread {
 		}
 
 		return coordinates;
-	}	
+	}
 }

@@ -51,6 +51,7 @@ public abstract class Board extends Observable {
 
 	public void addGameElement(GameElement gameElement) {
 		//TODO
+
 	}
 
 	public List<BoardPosition> getNeighboringPositions(Cell cell) {
