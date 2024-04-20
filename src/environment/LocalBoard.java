@@ -24,7 +24,9 @@ public class LocalBoard extends Board{
 	public LocalBoard() {		
 		// TODO
 		// place game elements and snakes
-
+		for(int i = 0; i < NUM_SNAKES; i++) {
+			addSnake(new AutomaticSnake(i, this));
+		}
 	}
 
 	// synchronization in cell
@@ -32,6 +34,9 @@ public class LocalBoard extends Board{
 	public void init() {
 		// TODO
 		// Start Threads
+		for(Snake snake : snakes) {
+			snake.start();
+		}
 	}
 
 	
