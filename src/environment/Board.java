@@ -70,8 +70,13 @@ public abstract class Board extends Observable {
 	}
 
 	public BoardPosition selectPositionClosestToGoal(List<BoardPosition> possibleDestinations) {
-		//TODO
-		return null;
+		BoardPosition positionClosestToGoal = new BoardPosition(0, 0);
+		for(BoardPosition bp : possibleDestinations) {
+			if(bp.distanceTo(goalPosition) < positionClosestToGoal.distanceTo(goalPosition)) {
+				positionClosestToGoal = bp;
+			}
+		}
+		return positionClosestToGoal;
 	}
 
 	protected Goal addGoal() {
