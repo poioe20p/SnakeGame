@@ -53,8 +53,7 @@ public abstract class Snake extends Thread {
 	// the cell, which means the cell must be empty or else the method will define a new position randomly
 	// for the snake and then repeat the process until the snake obtains a position
 	protected void doInitialPositioning()  {
-		//TODO
-		BoardPosition boardPosition = new BoardPosition( (int) (Math.random()*31), 0);
+		BoardPosition boardPosition = new BoardPosition( 0, (int) (Math.random()*31));
 		while(true) {
 			if (!board.getCell(boardPosition).isOcupied()) {
 				try {
@@ -66,7 +65,7 @@ public abstract class Snake extends Thread {
 					throw new RuntimeException(e);
 				}
 			} else {
-				boardPosition = new BoardPosition( (int) (Math.random()*31), 0);
+				boardPosition = new BoardPosition( 0 , (int) (Math.random()*31));
 			}
 		}
 	}

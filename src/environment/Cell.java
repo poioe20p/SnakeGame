@@ -27,10 +27,13 @@ public class Cell{
 		return position;
 	}
 
-	// request a cell to be occupied by Snake, If it is occupied by another Snake or Obstacle, wait.
-	public void request(Snake snake)
+	// request a cell to be occupied by Snake, If it is occupied by another Snake or Obstacle, wait (snake doesn't move).
+	public synchronized void request(Snake snake)
 			throws InterruptedException {
-		// TODO
+		while(isOcupied()) {
+			wait();
+		}
+		ocuppyingSnake = snake;
 	}
 
 	public void release() {
@@ -53,7 +56,6 @@ public class Cell{
 
 	// Returns true if there's a non-null instance of occupyingSnake or gameElement
 	public boolean isOcupied() {
-		// TODO
 		return ocuppyingSnake != null || gameElement != null;
 	}
 
@@ -67,10 +69,10 @@ public class Cell{
 		// TODO
 		return null;
 	}
+
 	public void removeObstacle() {
 		// TODO
 	}
-
 
 	public Goal getGoal() {
 		return (Goal)gameElement;
