@@ -32,6 +32,7 @@ public class AutomaticSnake extends Snake {
 			});
 			try {
 				move(getBoard().getCell(getBoard().selectPositionClosestToGoal(possiblePositions)));
+				getBoard().setChanged();
 				sleep(Board.PLAYER_PLAY_INTERVAL);
 			} catch (InterruptedException e) {e.printStackTrace();}
 		}
