@@ -27,6 +27,7 @@ public class LocalBoard extends Board{
 		for(int i = 0; i < NUM_SNAKES; i++) {
 			addSnake(new AutomaticSnake(i, this));
 		}
+		setChanged();
 	}
 
 	// synchronization in cell
