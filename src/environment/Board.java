@@ -81,7 +81,7 @@ public abstract class Board extends Observable {
 	}
 
 	public BoardPosition selectPositionClosestToGoal(List<BoardPosition> possibleDestinations) {
-		BoardPosition positionClosestToGoal = new BoardPosition(0, 0);
+		BoardPosition positionClosestToGoal = possibleDestinations.get(0);
 		for(BoardPosition bp : possibleDestinations) {
 			if(bp.distanceTo(goalPosition) < positionClosestToGoal.distanceTo(goalPosition)) {
 				positionClosestToGoal = bp;
