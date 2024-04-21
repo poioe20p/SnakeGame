@@ -39,7 +39,7 @@ public class Cell{
 			wait();
 		}
 		if (isOcupiedByGoal()) {
-			snake.consumeGoal(removeGoal());
+			removeGoal().captureGoal(snake);;
 			for (Snake s : snake.getBoard().getSnakes()) {
 				 s.interrupt();
 			}
@@ -108,9 +108,7 @@ public class Cell{
 
 
 	public void removeSnake(Snake snake) {
-		if(snake.getIdentification() == getOcuppyingSnake().getIdentification()) {
-			ocuppyingSnake = null;
-		}
+		//TODO
 	}
 
 

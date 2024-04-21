@@ -20,4 +20,16 @@ public class Goal extends GameElement  {
 	public int getGoalValue() {
 		return value;
 	}
+	
+	public synchronized void captureGoal(Snake snake) {
+		snake.addSize(this.getGoalValue());
+		if(this.getGoalValue() < Goal.MAX_VALUE) {
+			try {
+				this.incrementValue();
+				board.addGameElement(this);
+			} catch (InterruptedException e) {e.printStackTrace();}
+		} else {
+			board.finishGame();
+		}
+	}
 }

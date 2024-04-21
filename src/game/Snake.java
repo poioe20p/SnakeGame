@@ -31,6 +31,10 @@ public abstract class Snake extends Thread {
 	public int getSize() {
 		return size;
 	}
+	
+	public void addSize(int n) {
+		size += n;
+	}
 
 	public int getIdentification() {
 		return id;
@@ -99,17 +103,5 @@ public abstract class Snake extends Thread {
 			return false;
 		});
 		return possiblePositions;
-	}
-	
-	public synchronized void consumeGoal(Goal goal) {
-		size += goal.getGoalValue();
-		if(goal.getGoalValue() < Goal.MAX_VALUE) {
-			try {
-				goal.incrementValue();
-				board.addGameElement(goal);
-			} catch (InterruptedException e) {e.printStackTrace();}
-		} else {
-			board.finishGame();
-		}
 	}
 }
