@@ -21,7 +21,7 @@ public abstract class Board extends Observable {
 	public static final int WIDTH = 30;
 	public static final int HEIGHT = 30;
 	protected LinkedList<Snake> snakes = new LinkedList<Snake>();
-	protected boolean isFinished;
+	protected boolean isFinished = false;
 
 	public Board() {
 		cells = new Cell[WIDTH][HEIGHT];
@@ -123,9 +123,13 @@ public abstract class Board extends Observable {
 		//TODO
 
 	}
+	
 	public boolean isFinished() {
 		return isFinished;
-
+	}
+	
+	public void finishGame() {
+		isFinished = true;
 	}
 
 	public LinkedList<Obstacle> getObstacles() {

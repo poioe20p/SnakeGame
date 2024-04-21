@@ -2,6 +2,7 @@ package src.game;
 
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.List;
 
 import src.environment.LocalBoard;
 import src.gui.SnakeGui;
@@ -85,5 +86,30 @@ public abstract class Snake extends Thread {
 		}
 
 		return coordinates;
+	}
+	
+	public List<BoardPosition> getPossibleMovementPositions(){
+		List<BoardPosition> possiblePositions = board.getNeighboringPositions(cells.getLast());
+		possiblePositions.removeIf(bp -> {
+			for(Cell c : this.cells){
+				if(c.getPosition().equals(board.getCell(bp).getPosition())) {
+					return true;
+				}
+			}
+			return false;
+		});
+		return possiblePositions;
+	}
+	
+	public synchronized void consumeGoal(Goal goal) {
+		size += goal.getGoalValue();
+		if(goal.getGoalValue() < Goal.MAX_VALUE) {
+			try {
+				goal.incrementValue();
+				board.addGameElement(goal);
+			} catch (InterruptedException e) {e.printStackTrace();}
+		} else {
+			board.finishGame();
+		}
 	}
 }
