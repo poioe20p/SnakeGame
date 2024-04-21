@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -16,8 +17,7 @@ public class LocalBoard extends Board{
 	private static final int NUM_SNAKES = 6;
 	private static final int NUM_OBSTACLES = 25;
 	private static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 3;
-
-
+	private static final int NUM_WAITERS = 3;
 
 	public LocalBoard() {
 		// TODO
@@ -39,8 +39,15 @@ public class LocalBoard extends Board{
 			snake.start();
 		}
 		ExecutorService pool = Executors.newFixedThreadPool(NUM_SIMULTANEOUS_MOVING_OBSTACLES);
+		CyclicBarrier barrier = new CyclicBarrier(NUM_WAITERS, new Runnable() {
+			@Override
+			public void run() {
+				addGameElement(new Killer());
+				setChanged();
+			}
+		});
 		for(Obstacle obstacle: getObstacles()) {
-			pool.submit(new ObstacleMover(obstacle, this));
+			pool.submit(new ObstacleMover(obstacle, this, barrier));
 		}
 	}
 

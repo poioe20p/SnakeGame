@@ -4,13 +4,18 @@ import src.environment.Board;
 import src.environment.BoardPosition;
 import src.environment.Cell;
 
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+
 public class ObstacleMover extends Thread {
 	private Obstacle obstacle ;
 	private Board board ;
+	private CyclicBarrier barrier;
 
-	public ObstacleMover(Obstacle obstacle, Board board) {
+	public ObstacleMover(Obstacle obstacle, Board board, CyclicBarrier barrier) {
 		this.obstacle = obstacle;
 		this.board = board;
+		this.barrier = barrier;
 	}
 
 	@Override
@@ -46,6 +51,11 @@ public class ObstacleMover extends Thread {
 			} else {
 				boardPosition = new BoardPosition((int) (Math.random() * Board.WIDTH), (int) (Math.random() * Board.HEIGHT));
 			}
+		}
+		try {
+			barrier.await();
+		} catch (InterruptedException | BrokenBarrierException e) {
+			throw new RuntimeException(e);
 		}
 	}
 }

@@ -51,7 +51,7 @@ public abstract class Board extends Observable {
 
 
 
-	// This method add the element to a random and  empty position on the board.
+	// This method add the element to a random and empty position on the board.
 	public void addGameElement(GameElement gameElement) {
 		BoardPosition boardPosition = getRandomPosition();
 		while (true) {
