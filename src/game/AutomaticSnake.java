@@ -19,11 +19,10 @@ public class AutomaticSnake extends Snake {
 
 	@Override
 	public void run() {
-		doInitialPositioning();
 		while(!wasKilled()) {
-			List<BoardPosition> possiblePositions = getBoard().getNeighboringPositions(getCells().get(0));
+			List<BoardPosition> possiblePositions = getBoard().getNeighboringPositions(cells.getLast());
 			possiblePositions.removeIf(bp -> {
-				for(Cell c : this.getCells()){
+				for(Cell c : this.cells){
 					if(c.getPosition().equals(getBoard().getCell(bp).getPosition())) {
 						return true;
 					}

@@ -45,12 +45,9 @@ public abstract class Snake extends Thread {
 
 	protected synchronized void move(Cell cell) throws InterruptedException {
 		cell.request(this);
-		cells.addFirst(cell);
+		cells.addLast(cell);
 		if(cells.size() > size) {
-			cells.removeLast().removeSnake(this);
-//			Cell cells2 = cells.removeLast();
-//			System.out.println(cells2);
-//			System.out.println(cells2.getOcuppyingSnake());
+			cells.removeFirst().removeSnake(this);
 		}
 		notifyAll();
 	}
