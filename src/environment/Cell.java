@@ -50,8 +50,7 @@ public class Cell{
 	}
 
 	public void setGameElement(GameElement obstacle) {
-		// TODO
-
+		gameElement = obstacle;
 	}
 
 	// Returns true if there's a non-null instance of occupyingSnake or gameElement

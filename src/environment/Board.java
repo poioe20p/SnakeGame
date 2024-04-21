@@ -49,9 +49,20 @@ public abstract class Board extends Observable {
 		this.goalPosition = goalPosition;
 	}
 
-	public void addGameElement(GameElement gameElement) {
-		//TODO
 
+
+	// This method add the element to a random and  empty position on the board.
+	public void addGameElement(GameElement gameElement) {
+		BoardPosition boardPosition = getRandomPosition();
+		while (true) {
+			if (!getCell(boardPosition).isOcupied()) {
+				getCell(boardPosition).setGameElement(new Obstacle(this));
+				setGoalPosition(boardPosition);
+				break;
+			} else {
+				boardPosition = getRandomPosition();
+			}
+		}
 	}
 
 	public List<BoardPosition> getNeighboringPositions(Cell cell) {
@@ -85,8 +96,12 @@ public abstract class Board extends Observable {
 		return goal;
 	}
 
+	// The method calls the addGameElement method the number of times equal to the number of
+	// obstacles top be added to the board.
 	protected void addObstacles(int numberObstacles) {
-		//TODO
+		for(int i = 0; i < numberObstacles; i++) {
+			addGameElement(new Obstacle(this));
+		}
 	}
 
 	public LinkedList<Snake> getSnakes() {
@@ -102,13 +117,12 @@ public abstract class Board extends Observable {
 
 	public void moveObstacle(Obstacle obstacle) {
 		//TODO
-		
+
 	}
 
-	
 	public void removeGoal() {
 		//TODO
-		
+
 	}
 	public boolean isFinished() {
 		return isFinished;
@@ -126,10 +140,10 @@ public abstract class Board extends Observable {
 		snakes.add(snake);
 	}
 
-	
-	public abstract void init(); 
 
-	
+	public abstract void init();
+
+
 	// Ignorar: para johador humano
 	public abstract void handleKeyPress(int keyCode);
 
