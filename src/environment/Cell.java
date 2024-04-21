@@ -6,6 +6,9 @@ import src.game.Goal;
 import src.game.Killer;
 import src.game.Obstacle;
 import src.game.Snake;
+
+import java.util.LinkedList;
+
 import src.game.AutomaticSnake;
 
 public class Cell{
@@ -29,8 +32,17 @@ public class Cell{
 
 	// request a cell to be occupied by Snake, If it is occupied by another Snake or Obstacle, wait (snake doesn't move).
 	public synchronized void request(Snake snake) throws InterruptedException {
-		while(isOcupied()) {
+		while(isOcupied() && !isOcupiedByGoal()) {
+			if(!snake.getBoard().selectPositionClosestToGoal(snake.getPossibleMovementPositions()).equals(position)) {
+				snake.interrupt();
+			}
 			wait();
+		}
+		if (isOcupiedByGoal()) {
+			snake.consumeGoal(removeGoal());
+			for (Snake s : snake.getBoard().getSnakes()) {
+				 s.interrupt();
+			}
 		}
 		ocuppyingSnake = snake;
 	}
@@ -65,8 +77,9 @@ public class Cell{
 
 
 	public Goal removeGoal() {
-		// TODO
-		return null;
+		Goal goal = (Goal) gameElement;
+		gameElement = null;
+		return goal;
 	}
 
 	public void removeObstacle() {
