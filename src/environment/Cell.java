@@ -95,7 +95,9 @@ public class Cell{
 
 
 	public void removeSnake(Snake snake) {
-		// TODO
+		if(snake.getIdentification() == getOcuppyingSnake().getIdentification()) {
+			ocuppyingSnake = null;
+		}
 	}
 
 
