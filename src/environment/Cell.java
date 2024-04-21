@@ -28,8 +28,7 @@ public class Cell{
 	}
 
 	// request a cell to be occupied by Snake, If it is occupied by another Snake or Obstacle, wait (snake doesn't move).
-	public synchronized void request(Snake snake)
-			throws InterruptedException {
+	public synchronized void request(Snake snake) throws InterruptedException {
 		while(isOcupied()) {
 			wait();
 		}

@@ -56,8 +56,8 @@ public abstract class Board extends Observable {
 		BoardPosition boardPosition = getRandomPosition();
 		while (true) {
 			if (!getCell(boardPosition).isOcupied()) {
-				getCell(boardPosition).setGameElement(new Obstacle(this));
-				setGoalPosition(boardPosition);
+				getCell(boardPosition).setGameElement(gameElement);
+				if(gameElement instanceof Goal) setGoalPosition(boardPosition);
 				break;
 			} else {
 				boardPosition = getRandomPosition();

@@ -43,11 +43,14 @@ public abstract class Snake extends Thread {
 		return cells;
 	}
 
-	protected void move(Cell cell) throws InterruptedException {
+	protected synchronized void move(Cell cell) throws InterruptedException {
 		cell.request(this);
 		cells.addFirst(cell);
 		if(cells.size() > size) {
 			cells.removeLast().removeSnake(this);
+//			Cell cells2 = cells.removeLast();
+//			System.out.println(cells2);
+//			System.out.println(cells2.getOcuppyingSnake());
 		}
 		notifyAll();
 	}
@@ -62,8 +65,7 @@ public abstract class Snake extends Thread {
 			if (!board.getCell(boardPosition).isOcupied()) {
 				try {
 					board.getCell(boardPosition).request(this);
-					cells.add(new Cell(boardPosition));
-					board.addSnake(this);
+					cells.add(board.getCell(boardPosition));
 					break;
 				} catch (InterruptedException e) {
 					throw new RuntimeException(e);

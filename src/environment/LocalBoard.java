@@ -23,12 +23,14 @@ public class LocalBoard extends Board{
 
 
 
-	public LocalBoard() {		
+	public LocalBoard() {
 		// TODO
 		// place game elements and snakes
 		for(int i = 0; i < NUM_SNAKES; i++) {
 			addSnake(new AutomaticSnake(i, this));
 		}
+		addGoal();
+		addObstacles(NUM_OBSTACLES);
 		setChanged();
 	}
 
