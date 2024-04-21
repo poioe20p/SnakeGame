@@ -35,6 +35,9 @@ public class Cell{
 		while(isOcupied() && !isOcupiedByGoal()) {
 			if(!snake.getBoard().selectPositionClosestToGoal(snake.getPossibleMovementPositions()).equals(position)) {
 				snake.interrupt();
+			} else if(isOccupiedByKiller()) {
+				snake.killSnake();
+				snake.interrupt();
 			}
 			wait();
 		}
