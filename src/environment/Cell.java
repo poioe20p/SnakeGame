@@ -37,6 +37,7 @@ public class Cell{
 
 	public synchronized void release() {
 		ocuppyingSnake = null;
+		gameElement = null;
 		notifyAll();
 	}
 
@@ -70,7 +71,7 @@ public class Cell{
 	}
 
 	public void removeObstacle() {
-		// TODO
+		gameElement = null;
 	}
 
 	public Goal getGoal() {

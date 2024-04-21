@@ -19,7 +19,7 @@ public class Obstacle extends GameElement {
 		return remainingMoves;
 	}
 	public void decrementRemainingMoves() {
-		remainingMoves--;
+		remainingMoves = remainingMoves - 1;
 	}
 
 }

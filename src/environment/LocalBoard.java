@@ -8,12 +8,8 @@ import java.util.Observable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import src.game.GameElement;
-import src.game.Goal;
-import src.game.Obstacle;
-import src.game.Snake;
+import src.game.*;
 import src.server.Server;
-import src.game.AutomaticSnake;
 
 public class LocalBoard extends Board{
 	
@@ -41,6 +37,10 @@ public class LocalBoard extends Board{
 		// Start Threads
 		for(Snake snake : snakes) {
 			snake.start();
+		}
+		ExecutorService pool = Executors.newFixedThreadPool(NUM_SIMULTANEOUS_MOVING_OBSTACLES);
+		for(Obstacle obstacle: getObstacles()) {
+			pool.submit(new ObstacleMover(obstacle, this));
 		}
 	}
 

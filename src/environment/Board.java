@@ -117,7 +117,6 @@ public abstract class Board extends Observable {
 
 	public void moveObstacle(Obstacle obstacle) {
 		//TODO
-
 	}
 
 	public void removeGoal() {
@@ -130,9 +129,15 @@ public abstract class Board extends Observable {
 	}
 
 	public LinkedList<Obstacle> getObstacles() {
-		//TODO
-		// percorrer cells e acumular obstáculos numa lista
-		return null;
+		LinkedList<Obstacle> obstacles = new LinkedList<>();
+		for (Cell[] cell : cells) {
+			for (int j = 0; j < cells[0].length; j++) {
+				if (cell[j].isOcupiedByObstacle()) {
+					obstacles.add((Obstacle) cell[j].getGameElement());
+				}
+			}
+		}
+		return obstacles;
 	}
 
 
@@ -144,7 +149,7 @@ public abstract class Board extends Observable {
 	public abstract void init();
 
 
-	// Ignorar: para johador humano
+	// Ignorar: para jogador humano
 	public abstract void handleKeyPress(int keyCode);
 
 	public abstract void handleKeyRelease();
