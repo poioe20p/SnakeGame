@@ -43,13 +43,12 @@ public abstract class Snake extends Thread {
 		return cells;
 	}
 
-	protected synchronized void move(Cell cell) throws InterruptedException {
+	protected void move(Cell cell) throws InterruptedException {
 		cell.request(this);
 		cells.addLast(cell);
 		if(cells.size() > size) {
-			cells.removeFirst().removeSnake(this);
+			cells.removeFirst().release();
 		}
-		notifyAll();
 	}
 
 	// The snake's initial position is randomly attributed to a row in the 1st colum specifically
