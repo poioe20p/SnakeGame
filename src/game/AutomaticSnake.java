@@ -19,11 +19,16 @@ public class AutomaticSnake extends Snake {
 
 	@Override
 	public void run() {
-		while(!wasKilled() || !getBoard().isFinished()) {
+		while(!wasKilled() && !getBoard().isFinished()) {
 			try {
-				move(getBoard().getCell(getBoard().selectPositionClosestToGoal(getPossibleMovementPositions())));
-				getBoard().setChanged();
-				sleep(Board.PLAYER_PLAY_INTERVAL);
+				List<BoardPosition> possibleMovementPositions = getPossibleMovementPositions();
+				if(!possibleMovementPositions.isEmpty()) {
+					move(getBoard().getCell(getBoard().selectPositionClosestToGoal(possibleMovementPositions)));
+					getBoard().setChanged();
+					sleep(Board.PLAYER_PLAY_INTERVAL);
+				} else {
+					this.killSnake();
+				}
 			} catch (InterruptedException e) {
 				try {
 					sleep(Board.PLAYER_PLAY_INTERVAL);
