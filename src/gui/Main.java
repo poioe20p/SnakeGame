@@ -13,6 +13,9 @@ public class Main {
 		LocalBoard board=new LocalBoard();
 		SnakeGui game = new SnakeGui(board,600,0);
 		game.init();
+		try {
+			new Server().startServing(board);
+		} catch (IOException e) {e.printStackTrace();}
 		// Launch server
 		// TODO
 	}

@@ -51,8 +51,6 @@ public class Cell{
 	}
 
 	public synchronized void release() {
-		ocuppyingSnake = null;
-		gameElement = null;
 		notifyAll();
 	}
 
@@ -110,8 +108,8 @@ public class Cell{
 	}
 
 
-	public void removeSnake(Snake snake) {
-		//TODO
+	public void removeSnake() {
+		ocuppyingSnake = null;
 	}
 
 

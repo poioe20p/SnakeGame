@@ -52,7 +52,9 @@ public abstract class Snake extends Thread {
 		cell.request(this);
 		cells.addLast(cell);
 		if(cells.size() > size) {
-			cells.removeFirst().release();
+			Cell lastSnakeCell = cells.removeFirst();
+			lastSnakeCell.removeSnake();
+			lastSnakeCell.release();
 		}
 	}
 
