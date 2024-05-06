@@ -1,6 +1,8 @@
 package src.remote;
 
-public class ActionResult {
+import java.io.Serializable;
+
+public class ActionResult implements Serializable {
 	
 	private boolean	wasSuccessful;
 	private boolean gameEnded;

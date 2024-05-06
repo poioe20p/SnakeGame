@@ -90,7 +90,6 @@ public abstract class Snake extends Thread {
 		for (Cell cell : cells) {
 			coordinates.add(cell.getPosition());
 		}
-
 		return coordinates;
 	}
 	

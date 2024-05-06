@@ -18,7 +18,7 @@ import src.remote.ActionResult;
 public class Server {
 	public static final int SERVER_PORT = 8080;
 	private LocalBoard board;
-	
+
 	public void startServing(LocalBoard board) throws IOException {
 		this.board = board;
 		ServerSocket ss = new ServerSocket(SERVER_PORT);
@@ -26,7 +26,7 @@ public class Server {
 			while(true){
 				Socket socket = ss.accept();
 				new DealWithClient(socket).start();
-			}			
+			}
 		} finally {
 			ss.close();
 		}
@@ -35,16 +35,16 @@ public class Server {
 	public LocalBoard getBoard() {
 		return board;
 	}
-	
+
 	public class DealWithClient extends Thread {
 
 		private BufferedReader in;
 		private ObjectOutputStream out;
-		
+
 		public DealWithClient(Socket socket) throws IOException {
 			doConnections(socket);
 		}
-		
+
 		@Override
 		public void run() {
 			try {
@@ -56,35 +56,42 @@ public class Server {
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			out = new ObjectOutputStream(socket.getOutputStream());
 		}
-		
+
 		private void serve() throws IOException {
 			while (true) {
 				boolean wasSuccessful = false;
 				String[] str = in.readLine().split(";");
 				Cell cell = board.getCell(new BoardPosition(Integer.parseInt(str[0]), Integer.parseInt(str[1])));
+				System.out.println(cell.getPosition().toString());
 				if (board.isFinished()) {
 					out.writeObject(new ActionResult(wasSuccessful, true));
 					break;
 				}else if(cell.isOcupiedByObstacle()) {
+					System.out.println("Obstaculo");
 					cell.removeObstacle();
 					cell.release();
+					board.setChanged();
 					wasSuccessful = true;
 					out.writeObject(new ActionResult(wasSuccessful, false));
-				}else if(cell.isOcupiedBySnake()) {
+				} else if(cell.isOcupiedBySnake()) {
 					if(cell.getOcuppyingSnake().wasKilled()) {
+						System.out.println("Cobra");
 						for(Cell c : cell.getOcuppyingSnake().getCells()) {
 							c.removeSnake();
 							c.release();
+							board.setChanged();
 						}
 						wasSuccessful = true;
 						out.writeObject(new ActionResult(wasSuccessful, false));
+					} else {
+						out.writeObject(new ActionResult(wasSuccessful, false));
 					}
-				}else {
+				} else {
 					out.writeObject(new ActionResult(wasSuccessful, false));
 				}
 			}
 		}
-		
+
 	}
-	
+
 }
