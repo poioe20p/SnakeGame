@@ -29,6 +29,7 @@ public class Goal extends GameElement  {
 				board.addGameElement(this);
 			} catch (InterruptedException e) {e.printStackTrace();}
 		} else {
+			LocalBoard.pool.shutdownNow();
 			board.finishGame();
 		}
 	}

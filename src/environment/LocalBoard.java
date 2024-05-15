@@ -18,7 +18,7 @@ public class LocalBoard extends Board{
 	private static final int NUM_OBSTACLES = 25;
 	private static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 3;
 	private static final int NUM_WAITERS = 3;
-	private ExecutorService pool;
+	public static ExecutorService pool;
 
 	public LocalBoard() {
 		// TODO
