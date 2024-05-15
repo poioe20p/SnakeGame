@@ -18,6 +18,7 @@ public class LocalBoard extends Board{
 	private static final int NUM_OBSTACLES = 25;
 	private static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 3;
 	private static final int NUM_WAITERS = 3;
+	private ExecutorService pool;
 
 	public LocalBoard() {
 		// TODO
@@ -38,7 +39,7 @@ public class LocalBoard extends Board{
 		for(Snake snake : snakes) {
 			snake.start();
 		}
-		ExecutorService pool = Executors.newFixedThreadPool(NUM_SIMULTANEOUS_MOVING_OBSTACLES);
+		pool = Executors.newFixedThreadPool(NUM_SIMULTANEOUS_MOVING_OBSTACLES);
 		CyclicBarrier barrier = new CyclicBarrier(NUM_WAITERS, new Runnable() {
 			@Override
 			public void run() {

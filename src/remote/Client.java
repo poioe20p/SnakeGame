@@ -57,7 +57,7 @@ public class Client {
 			}
 
 			try {
-				Thread.sleep(100);
+				Thread.sleep(1);
 				x = String.valueOf((int) (Math.random()*Board.WIDTH));
 				y = String.valueOf((int) (Math.random()*Board.HEIGHT));
 				out.println(x + ";" + y);

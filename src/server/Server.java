@@ -13,6 +13,7 @@ import java.net.Socket;
 import src.environment.BoardPosition;
 import src.environment.Cell;
 import src.environment.LocalBoard;
+import src.game.Snake;
 import src.remote.ActionResult;
 
 public class Server {
@@ -74,13 +75,15 @@ public class Server {
 					wasSuccessful = true;
 					out.writeObject(new ActionResult(wasSuccessful, false));
 				} else if(cell.isOcupiedBySnake()) {
-					if(cell.getOcuppyingSnake().wasKilled()) {
+					Snake snake = cell.getOcuppyingSnake();
+					if(snake.wasKilled()) {
 						System.out.println("Cobra");
-						for(Cell c : cell.getOcuppyingSnake().getCells()) {
+						for(Cell c : snake.getCells()) {
 							c.removeSnake();
 							c.release();
-							board.setChanged();
 						}
+						snake.getCells().clear();
+						board.setChanged();
 						wasSuccessful = true;
 						out.writeObject(new ActionResult(wasSuccessful, false));
 					} else {
